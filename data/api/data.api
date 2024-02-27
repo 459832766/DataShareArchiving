@@ -1,0 +1,49 @@
+syntax = "v1"
+
+info (
+	title:  "data api"
+	desc:   "an api template for data service"
+	author: "zhihao.jin"
+	email:  "459832766@qq.com"
+)
+
+type UploadResponse {
+	Path string `json:"path"`
+}
+
+type DeleteRequest {
+	Path string `json:"path"`
+	Key  string `json:"key"`
+}
+
+type DeleteResponse {
+	Successed bool `json:"successed"`
+}
+
+type QueryRequest {
+	Path string `json:"path"`
+}
+
+type QueryResponse {
+	Items []DataItem `json:"items"`
+}
+
+type DataItem {
+	Name string `json:"name"`
+	Path string `json:"path"`
+}
+
+@server (
+	prefix: /v1/data
+)
+service data-api {
+	@handler UploadDataHandler
+	post /create returns (UploadResponse)
+
+	@handler DeleteDataHandler
+	post /delete (DeleteRequest) returns (DeleteResponse)
+
+	@handler QueryDataHandler
+	get /query (QueryRequest) returns (QueryResponse)
+}
+

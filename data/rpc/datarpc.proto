@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package datarpc;
+option go_package="./pb";
+
+message DeleteRequest {
+  string key = 1;
+  string path = 2;
+}
+
+message DeleteResponse {
+  bool successed = 1;
+}
+
+message QueryRequest {
+  string path = 1;
+}
+
+message QueryResponse {
+  repeated DataItem items = 1;
+}
+
+message DataItem {
+  string name = 1;
+  string path = 2;
+}
+
+
+service Datarpc {
+  rpc DataFakeDelete(DeleteRequest) returns(DeleteResponse);
+  rpc ListDataByPath(QueryRequest) returns(QueryResponse);
+}
